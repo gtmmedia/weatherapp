@@ -24,7 +24,7 @@ const autoRefreshCheckbox = document.getElementById("autoRefresh");
 
 // API Details (Replace with real API keys)
 const WEATHER_API_KEY = "c469214db3ece602652f65295590c4ff";
-const NEWS_API_KEY = "e3df3859a5394141aa2e6c4e1ab75167";
+const NEWS_API_KEY = "c697ec2db250da446ee380f337b9ae9f";
 
 // Toggle Dark Mode
 darkModeBtn.addEventListener("click", () => {
@@ -62,12 +62,26 @@ async function fetchWeather(city) {
 }
 
 // Fetch News Data
-async function fetchNews() {
-    const url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=${NEWS_API_KEY}`;
+async function fetchNews(city) {
+    // If a city is provided, search for news related to that city;
+    // otherwise, default to top headlines for India.
+    let url;
+    if (city && city.trim() !== "") {
+        // Using the search endpoint to find news articles related to the city.
+        url = `https://gnews.io/api/v4/search?q=${encodeURIComponent(city)}&token=${NEWS_API_KEY}&lang=en&max=10`;
+    } else {
+        url = `https://gnews.io/api/v4/top-headlines?token=${NEWS_API_KEY}&country=in&lang=en&max=10`;
+    }
     
     try {
         const response = await fetch(url);
         const data = await response.json();
+
+        // Check if articles exist in the response
+        if (!data.articles || data.articles.length === 0) {
+            newsContainer.innerHTML = `<p style="color: red;">No news articles found.</p>`;
+            return;
+        }
 
         newsContainer.innerHTML = data.articles.slice(0, 5).map(article => `
             <div class="news-item">
@@ -77,9 +91,12 @@ async function fetchNews() {
             </div>
         `).join('');
     } catch (error) {
+        console.error("Error fetching news:", error);
         newsContainer.innerHTML = `<p style="color: red;">Error fetching news.</p>`;
     }
 }
+
+
 
 // Get User Location & Fetch Weather
 locationBtn.addEventListener("click", () => {
@@ -171,8 +188,11 @@ if (autoRefreshCheckbox.checked) {
 
 // Search Button Action
 searchBtn.addEventListener("click", () => {
-    fetchWeather(cityInput.value);
+    const city = cityInput.value;
+    fetchWeather(city);
+    fetchNews(city); // Now news updates based on the entered city
 });
+
 
 // Press Enter to Search
 cityInput.addEventListener("keypress", (event) => {
