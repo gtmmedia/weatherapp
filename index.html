@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather & News Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title neon-text">🌤 Weather & News Dashboard 📰</h1>
+        <div class="search-box">
+            <input type="text" id="cityInput" placeholder="Enter city" class="input-box">
+            <button id="searchBtn" class="btn primary pulse">🔍 Search</button>
+            <button id="darkModeBtn" class="btn secondary glow">🌙 Toggle Dark Mode</button>
+        </div>
+        <div class="weather-section card glassmorphism">
+            <div id="weather" class="info-box animated-box">
+                <h2 class="gradient-text">Weather Info</h2>
+                <p id="weatherDetails">Enter a city to get started...</p>
+                <div class="temperature bold-text"></div>
+                <div class="weather-icons bounce-icons">
+                    <i class="fas fa-cloud"></i>
+                    <i class="fas fa-sun"></i>
+                    <i class="fas fa-cloud-showers-heavy"></i>
+                </div>
+                <div class="forecast-container"></div>
+                <button id="hourlyForecastBtn" class="btn tertiary hover-glow">📅 View Hourly Forecast</button>
+            </div>
+        </div>
+        <div class="news-section card glassmorphism">
+            <h2 class="gradient-text">Latest News</h2>
+            <div id="news" class="info-box animated-box news-container"></div>
+            <button id="moreNewsBtn" class="btn tertiary hover-glow">📰 Load More News</button>
+        </div>
+        <div class="extra-features">
+            <button id="locationBtn" class="btn secondary glow">📍 Use My Location</button>
+            <button id="refreshBtn" class="btn secondary pulse">🔄 Refresh Data</button>
+            <button id="saveBtn" class="btn primary hover-glow">💾 Save Preferences</button>
+            <button id="settingsBtn" class="btn primary hover-glow">⚙️ Settings</button>
+            <button id="shareBtn" class="btn primary hover-glow">📤 Share Dashboard</button>
+        </div>
+        <div class="user-preferences hidden card glassmorphism">
+            <h3 class="gradient-text">Settings</h3>
+            <label>
+                <input type="checkbox" id="temperatureUnit"> Use Fahrenheit
+            </label>
+            <label>
+                <input type="checkbox" id="notifications"> Enable Notifications
+            </label>
+            <label>
+                <input type="checkbox" id="autoRefresh"> Auto-Refresh Data
+            </label>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
